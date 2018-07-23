@@ -43,4 +43,5 @@ func New() (db *gorm.DB) {
 
 func autoMigrate(db *gorm.DB) {
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Post{})
 }

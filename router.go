@@ -13,6 +13,9 @@ func (app *App) InitRouter() {
 	nonAuth.POST("/users", echo.HandlerFunc(controller.SaveUser))
 	nonAuth.POST("/users/login", echo.HandlerFunc(controller.Login))
 
+	nonAuth.GET("/posts", echo.HandlerFunc(controller.GetAllPosts))
+	nonAuth.GET("/posts/:id", echo.HandlerFunc(controller.GetSinglePost))
+
 	auth := app.Group("/api/v1")
 
 	auth.Use(middleware.JWTWithConfig(middleware.JWTConfig{
@@ -22,5 +25,6 @@ func (app *App) InitRouter() {
 
 	auth.GET("/users", echo.HandlerFunc(controller.GetUsers))
 	auth.GET("/profile", echo.HandlerFunc(controller.GetUserProfile))
+	auth.POST("/posts", echo.HandlerFunc(controller.CreateNewPost))
 
 }
