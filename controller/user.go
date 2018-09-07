@@ -26,7 +26,9 @@ func SaveUser(c echo.Context) error {
 	if err := c.Bind(user); err != nil {
 		return err
 	}
+
 	hash, err := utils.HashPassword(user.Password)
+
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Something went wrong.")
 	}
@@ -34,12 +36,15 @@ func SaveUser(c echo.Context) error {
 	if err := user.EmailExists(c.Get("db").(*gorm.DB)); err == nil {
 		return echo.NewHTTPError(http.StatusConflict, "This email is already registered.")
 	}
+
 	user.Password = hash
 	if err := user.Create(c.Get("db").(*gorm.DB)); err != nil {
 		fmt.Println(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Could not register user.")
 	}
+
 	tokenStr, err := utils.GenerateJWT(user.ID, time.Duration(24))
+
 	if err != nil {
 		return err
 	}
@@ -48,6 +53,7 @@ func SaveUser(c echo.Context) error {
 		User  interface{} `json:"user"`
 		Token string      `json:"token"`
 	}
+
 	response := Response{
 		User:  user,
 		Token: tokenStr,
@@ -73,7 +79,9 @@ func Login(c echo.Context) error {
 	if match := utils.CheckPasswordHash(loginPayload.Password, user.Password); match != true {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Incorrect email or password")
 	}
+
 	tokenStr, err := utils.GenerateJWT(user.ID, time.Duration(24))
+
 	if err != nil {
 		return err
 	}
@@ -82,6 +90,7 @@ func Login(c echo.Context) error {
 		User  interface{} `json:"user"`
 		Token string      `json:"token"`
 	}
+
 	response := Response{
 		User:  user,
 		Token: tokenStr,
@@ -121,4 +130,24 @@ func GetUserProfile(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, user)
+}
+
+func ChangePassword(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func ResetPassword(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func FollowUser(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func UnFollowUser(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func GetUserFollowers(c echo.Context) error {
+	return c.JSON(http.StatusOK)
 }

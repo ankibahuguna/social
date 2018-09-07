@@ -33,8 +33,8 @@ func FindUserByEmail(db *gorm.DB, email string) (user User, err error) {
 	return
 }
 
-func (e *User) EmailExists(db *gorm.DB) ( err error) {
+func (e *User) EmailExists(db *gorm.DB) (err error) {
 	var count int64
- 	err = db.Where("Email=?", e.Email).First(&e).Count(&count).Error
- 	return
+	err = db.Where("Email=?", e.Email).First(&e).Count(&count).Error
+	return
 }

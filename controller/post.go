@@ -37,6 +37,25 @@ func GetSinglePost(c echo.Context) error {
 	return c.JSON(http.StatusOK, post)
 }
 
+func DeleteSinglePost(c echo.Context) error {
+	id := c.Param("id")
+
+	postId, err := strconv.ParseUint(id, 10, 64)
+
+	if err != nil {
+		fmt.Println(err)
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid post id", err)
+	}
+
+	post, deletionError := model.DeletePostById(c.Get("db").(*gorm.DB), postId)
+
+	if deletionError != nil {
+		return echo.NewHTTPError(http.StatusNotFound, "Post doesn't exist")
+	}
+
+	return c.JSON(http.StatusOK, post)
+}
+
 func CreateNewPost(c echo.Context) error {
 	post := &model.Post{}
 
@@ -62,4 +81,32 @@ func CreateNewPost(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, post)
 
+}
+
+func PostComment(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func EditComment(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func DeleteComment(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func GetComments(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func LikePost(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func UnlikePost(c echo.Context) error {
+	return c.JSON(http.StatusOK)
+}
+
+func GetLikes(c echo.Context) error {
+	return c.JSON(http.StatusOK)
 }

@@ -12,7 +12,7 @@ var config = struct {
 	DBName   string `default:"blog" env:"DBName"`
 	User     string `default:"root" env:"DBUser"`
 	Host     string `default:"127.0.0.1" env:"DBHost"`
-		Password string `default:"123456" env:"DBPassword"`
+	Password string `default:"123456" env:"DBPassword"`
 	Port     string `default:"3306" env:"DBPort"`
 }{}
 
@@ -26,7 +26,7 @@ func New() (db *gorm.DB) {
 		config.Host,
 		config.Port,
 		config.DBName,
-		)
+	)
 
 	db, err := gorm.Open("mysql", args)
 

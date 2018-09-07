@@ -33,6 +33,8 @@ func main() {
 	defer app.db.Close()
 
 	// Wrap db pointer into echo.context as a middleware
+	// This allows us to re-use database connection without importing it
+	// it in every file
 	app.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(context echo.Context) error {
 			context.Set("db", app.db)
