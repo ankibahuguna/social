@@ -133,21 +133,21 @@ func GetUserProfile(c echo.Context) error {
 }
 
 func ChangePassword(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func ResetPassword(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func FollowUser(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func UnFollowUser(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func GetUserFollowers(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }

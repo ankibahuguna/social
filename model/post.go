@@ -10,13 +10,14 @@ type Post struct {
 	Author  uint   `json:author`
 }
 
+
 func (e *Post) Create(db *gorm.DB) (err error) {
 	err = db.Create(e).Error
 	return
 }
 
 func FindPostById(db *gorm.DB, id uint64) (post Post, err error) {
-	err = db.First(&post, id).Error
+	err = db.Preload("User").First(&post, id).Error
 	return
 }
 

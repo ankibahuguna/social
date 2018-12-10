@@ -1,3 +1,5 @@
 .idea/
 social
+*.exe
+*.swp
 vendor/

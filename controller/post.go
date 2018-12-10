@@ -8,7 +8,12 @@ import (
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
+        "github.com/ankibahuguna/social/utils"
 )
+
+var genericResponse = utils.GenericResponse {
+        Data: "Hey",
+    }
 
 func GetAllPosts(c echo.Context) error {
 	posts, err := model.FindPosts(c.Get("db").(*gorm.DB))
@@ -47,7 +52,7 @@ func DeleteSinglePost(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid post id", err)
 	}
 
-	post, deletionError := model.DeletePostById(c.Get("db").(*gorm.DB), postId)
+	post, deletionError := model.DeletePost(c.Get("db").(*gorm.DB), postId)
 
 	if deletionError != nil {
 		return echo.NewHTTPError(http.StatusNotFound, "Post doesn't exist")
@@ -84,29 +89,29 @@ func CreateNewPost(c echo.Context) error {
 }
 
 func PostComment(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func EditComment(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func DeleteComment(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func GetComments(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func LikePost(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func UnlikePost(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
 
 func GetLikes(c echo.Context) error {
-	return c.JSON(http.StatusOK)
+	return c.JSON(http.StatusOK, genericResponse)
 }
