@@ -29,6 +29,7 @@ func (app *App) InitRouter() {
 	auth.POST("/users/:id/follow", echo.HandlerFunc(controller.FollowUser))
 	auth.DELETE("/users/:id/unfollow", echo.HandlerFunc(controller.UnFollowUser))
 	auth.GET("/users/:id/followers", echo.HandlerFunc(controller.GetUserFollowers))
+	auth.GET("/users/:id/posts", echo.HandlerFunc(controller.GetUserPosts))
 	auth.GET("/profile", echo.HandlerFunc(controller.GetUserProfile))
 
 	auth.POST("/posts", echo.HandlerFunc(controller.CreateNewPost))

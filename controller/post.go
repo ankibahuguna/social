@@ -3,17 +3,17 @@ package controller
 import (
 	"fmt"
 	"github.com/ankibahuguna/social/model"
+	"github.com/ankibahuguna/social/utils"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
-        "github.com/ankibahuguna/social/utils"
 )
 
-var genericResponse = utils.GenericResponse {
-        Data: "Hey",
-    }
+var genericResponse = utils.GenericResponse{
+	Data: "Hey",
+}
 
 func GetAllPosts(c echo.Context) error {
 	posts, err := model.FindPosts(c.Get("db").(*gorm.DB))
@@ -85,6 +85,32 @@ func CreateNewPost(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, post)
+
+}
+
+func GetUserPosts(c echo.Context) error {
+
+	id := c.Param("id")
+
+	userId, err := strconv.ParseUint(id, 10, 32)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid user id.", err)
+	}
+
+	_, userErr := model.FindUserById(c.Get("db").(*gorm.DB), userId)
+
+	if userErr != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "User does not exists")
+	}
+
+	posts, err := model.FindPostsByAuthor(c.Get("db").(*gorm.DB), userId)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusNotFound, "No posts found.")
+	}
+
+	return c.JSON(http.StatusOK, posts)
 
 }
 

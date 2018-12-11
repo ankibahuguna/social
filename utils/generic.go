@@ -1,5 +1,5 @@
 package utils
 
 type GenericResponse struct {
-            Data  interface{} `json:"data"`
+	Data interface{} `json:"data"`
 }

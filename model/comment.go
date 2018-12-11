@@ -21,3 +21,8 @@ func DeleteComment(db *gorm.DB, id uint64) (comment Comment, err error) {
 	err = db.Delete(&comment, id).Error
 	return
 }
+
+func GetCommentsByPostId(db *gorm.DB, postid uint64) (comment []Comment, err error) {
+	err = db.Preload("Author").Where("post=?", postid).Find(&comment).Error
+	return
+}
