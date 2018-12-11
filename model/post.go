@@ -7,7 +7,7 @@ type Post struct {
 	Model
 	Title   string `json:"title"`
 	Content string `gorm:"type:TEXT" json:"content"`
-	User    User   `gorm:"foreignkey:Author"`
+	User    User   `gorm:"foreignkey:Author" json:"user"`
 	Author  uint   `json:author`
 }
 
@@ -26,7 +26,9 @@ func (e *Post) Create(db *gorm.DB) (err error) {
 }
 
 func FindPostById(db *gorm.DB, id uint64) (post Post, err error) {
-	err = db.Preload("User").First(&post, id).Error
+	err = db.Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Table("users").Select("id,name,email")
+	}).First(&post, id).Error
 	return
 }
 

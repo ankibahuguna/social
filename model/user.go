@@ -9,12 +9,19 @@ type User struct {
 	Model
 	Name     string `json:"name"`
 	Email    string `gorm:"not null;unique" json:"email"`
-	Password string `json:"password"`
-	Age      int    `json:"age"`
+	Password string `json:"password" omitempty`
+	Age      int    `json:"age" omitempty`
 }
 
-func FindUsers(db *gorm.DB) (users []User, err error) {
-	err = db.Find(&users).Error
+type UserResponse struct {
+	ID    uint   `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Age   int    `json:"age"`
+}
+
+func FindUsers(db *gorm.DB) (users []UserResponse, err error) {
+	err = db.Table("users").Select("name, id, email, age").Find(&users).Error
 	return
 }
 
