@@ -9,8 +9,8 @@ type User struct {
 	Model
 	Name     string `json:"name"`
 	Email    string `gorm:"not null;unique" json:"email"`
-	Password string `json:"password" omitempty`
-	Age      int    `json:"age" omitempty`
+	Password string `json:"password ,omitempty"`
+	Age      int    `json:"age ,omitempty"`
 }
 
 type UserResponse struct {

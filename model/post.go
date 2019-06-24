@@ -8,7 +8,7 @@ type Post struct {
 	Title   string `json:"title"`
 	Content string `gorm:"type:TEXT" json:"content"`
 	User    User   `gorm:"foreignkey:Author" json:"user"`
-	Author  uint   `json:author`
+	Author  uint   `json:"author"`
 }
 
 type PostResponse struct {
