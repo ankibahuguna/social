@@ -25,7 +25,6 @@ func GetAllPosts(c echo.Context) error {
 
 func GetSinglePost(c echo.Context) error {
 	id := c.Param("id")
-
 	postId, err := strconv.ParseUint(id, 10, 64)
 
 	if err != nil {
@@ -44,7 +43,6 @@ func GetSinglePost(c echo.Context) error {
 
 func DeleteSinglePost(c echo.Context) error {
 	id := c.Param("id")
-
 	postId, err := strconv.ParseUint(id, 10, 64)
 
 	if err != nil {
@@ -91,7 +89,6 @@ func CreateNewPost(c echo.Context) error {
 func GetUserPosts(c echo.Context) error {
 
 	id := c.Param("id")
-
 	userId, err := strconv.ParseUint(id, 10, 32)
 
 	if err != nil {
