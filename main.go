@@ -29,7 +29,6 @@ func main() {
 
 	// Routing setup
 	app.InitRouter()
-
 	defer app.db.Close()
 
 	// Wrap db pointer into echo.context as a middleware
@@ -42,7 +41,5 @@ func main() {
 		}
 	})
 	app.Echo.Use(middleware.Logger())
-
-	// launch
 	app.Logger.Fatal(app.Start(config.Host + ":" + config.Port))
 }
